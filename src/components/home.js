@@ -8,6 +8,7 @@ export default function Home() {
   <>
   <div className="container">
     <Addnote/>
+    
     <Notes/>
   </div>
   </>

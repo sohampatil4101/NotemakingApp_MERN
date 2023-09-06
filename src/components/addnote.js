@@ -32,6 +32,10 @@ export default function Addnote() {
             <label >Description</label>
             <input type="text" name='description' id='description' onChange={handleChange} />
         </div>
+        <div className="box">
+            <label >Tag</label>
+            <input type="text" name='tag' id='tag' onChange={handleChange} />
+        </div>
         <button type='submit' onClick={handleClick}>Add note</button>
     </form>
     </>

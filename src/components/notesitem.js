@@ -3,7 +3,7 @@ import '../App.css';
 import noteContext from '../context/note/noteContext';
 
 export default function Notesitem(props) {
-    const {note} = props
+    const {note, updateNote} = props
         
     const context = useContext(noteContext)
     const {deletenote} = context
@@ -19,7 +19,9 @@ export default function Notesitem(props) {
             {note.description}  
           </div>
           <div className="buttons">
-              <button className='edit'>Edit</button>
+              <button className='edit' onClick={() =>{
+                updateNote(note)
+              }}>Edit</button>
               <button className='delete' onClick={() =>{
                 deletenote(note._id)
               }}>Delete</button>
