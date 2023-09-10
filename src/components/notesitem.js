@@ -10,7 +10,6 @@ export default function Notesitem(props) {
 
   return (
     <>
-    <div className="cards">
       <div className="card">
           <div className="title">
             {note.title}  
@@ -27,7 +26,6 @@ export default function Notesitem(props) {
               }}>Delete</button>
           </div>
       </div>
-    </div>
     </>
   )
 }

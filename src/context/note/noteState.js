@@ -1,13 +1,14 @@
-//  import { useState } from "react";
 import { useState } from "react";
 import noteContext from "./noteContext";
-// import { json } from "react-router-dom";
 
 
 const NoteState = (props) =>{
   const host = "http://localhost:5000"
     const notesInitial = []
       const [notes, setNotes] = useState(notesInitial)
+
+
+
 
       // get all notes
       const getNotes = async() =>{
@@ -16,12 +17,14 @@ const NoteState = (props) =>{
           method: "GET", 
           headers: {
             "Content-Type": "application/json",
-            "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRjZWE4ODk2MTBiYzc3ODNmMDg2ZjA2In0sImlhdCI6MTY5MTMyMDI1N30.gW2BEZhLhJTccvhD0Iwvwkw7GkYH0MPhBW8rDqFtYO0"
+            "auth-token": localStorage.getItem('token')
           },
         });
         const json = await response.json()
         setNotes(json)
       }
+
+
 
 
 
@@ -32,35 +35,28 @@ const NoteState = (props) =>{
           method: "POST", 
           headers: {
             "Content-Type": "application/json",
-            "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRjZWE4ODk2MTBiYzc3ODNmMDg2ZjA2In0sImlhdCI6MTY5MTMyMDI1N30.gW2BEZhLhJTccvhD0Iwvwkw7GkYH0MPhBW8rDqFtYO0"
+            "auth-token": localStorage.getItem('token')
           },
           body: JSON.stringify({title, description, tag}),
         });
-        const json = response.json()
-        console.log(json)
-        
+        const note = await response.json()
         // client logic
-        const note =   {
-          "_id": "64cff01a1b688rcsfa36131e8b1",
-          "user": "64cea889610bc7783f086f06",
-          "title": title,
-          "description": description,
-          "tag": tag,
-          "date": "2023-08-06T19:10:18.531Z",
-          "__v": 0
-        }
+        setNotes(notes.concat(note))        
         // setNotes(notes.push(note)) concat returns an array where as push updates an array
-        setNotes(notes.concat(note))
       }
+
+
+
 
 
       // edit an note
       const eiditnote = async(id, title, description, tag) =>{
         // API logic
         const response = await fetch(`${host}/api/notes/updatenote/${id}`, {
-          method: "POST", 
+          method: "PUT", 
           headers: {
             "Content-Type": "application/json",
+            "auth-token": localStorage.getItem('token')
           },
           redirect: "follow",
           referrerPolicy: "no-referrer", 
@@ -69,19 +65,22 @@ const NoteState = (props) =>{
         const json = response.json()
         console.log(json)
         
-        
         // client side logic
-        for (let index = 0; index < notes.length; index++) {
-          const element = notes[index];
+        let newNotes = JSON.parse(JSON.stringify(notes))
+        for (let index = 0; index < newNotes.length; index++) {
+          const element = newNotes[index];
           if (element._id === id) {
-            element.title = title
-            element.description = description
-            element.tag = tag
-            
+            newNotes[index].title = title
+            newNotes[index].description = description
+            newNotes[index].tag = tag
+            break            
           }
-          
         }
+        setNotes(newNotes)
+
       }
+
+      
       // delete an note
       const deletenote = async(id) =>{
          // API logic
@@ -89,11 +88,12 @@ const NoteState = (props) =>{
           method: "DELETE", 
           headers: {
             "Content-Type": "application/json",
-            "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRjZWE4ODk2MTBiYzc3ODNmMDg2ZjA2In0sImlhdCI6MTY5MTMyMDI1N30.gW2BEZhLhJTccvhD0Iwvwkw7GkYH0MPhBW8rDqFtYO0"
+            "auth-token": localStorage.getItem('token')
           },
         });
         const json = response.json()
         console.log(json)
+
 
         const newNode = notes.filter((note) =>{
           return note._id !== id

@@ -79,7 +79,9 @@ form button{
 /* cards for notes */
 .cards{
   display: flex;
+  justify-content: center;
   flex-direction: row;
+  align-items: center;
   flex-wrap: wrap;  
   width: 400px;
   height: 150px;
@@ -113,3 +115,6 @@ form button{
   border-radius: 5px;
   margin: 5px;
 }
+
+
+

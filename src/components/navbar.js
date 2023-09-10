@@ -1,22 +1,33 @@
 import '../App.css'
-import { Outlet, Link, useLocation } from "react-router-dom";
+import { Outlet, Link, useLocation, useNavigate } from "react-router-dom";
 
 export default function Navbar() {
     let location = useLocation();
-    // useEffect(() =>{
-    //     console.log(loaction.pathname)
-    // }, [location])
+    let navigate = useNavigate();
+    const logout = () =>{
+      localStorage.removeItem('token')
+      navigate('/home')
+      
+    }
   return (
     <>
     <ul className="navbar" >
-    <li className={`navbar-item ${location.pathname === "/home"?"active": ""}`}><Link className="nav-link"href='/' to="/home"> Home</Link> </li>
+    {
+      localStorage.getItem('token')?
+      <li className={`navbar-item ${location.pathname === "/home"?"active": ""}`}><Link className="nav-link"href='/' to="/home"> Home</Link> </li>
+      :
+    <li className={`navbar-item ${location.pathname === "/"?"active": ""}`}><Link className="nav-link"href='/' to="/"> Home</Link> </li>
+    }
+    <li className={`navbar-item ${location.pathname === "/register"?"active": ""}`}><Link className="nav-link"href='/' to="/register"> Register</Link> </li>
+    {
+      localStorage.getItem('token')?
+      <li className={`navbar-item ${location.pathname === "/logout"?"active": ""}`}><Link className="nav-link"href='/' to="/" onClick={logout}> Logout</Link> </li>
+      :
+      <li className={`navbar-item ${location.pathname === "/login"?"active": ""}`}><Link className="nav-link"href='/' to="/login"> Login</Link> </li>
+    }
+    </ul>        
+        
 
-    <li className={`navbar-item ${location.pathname === "/about"?"active": ""}`}><Link className="nav-link"href='/' to="/about"> about</Link> </li>
-
-    <li className={`navbar-item ${location.pathname === "/contact"?"active": ""}`}><Link className="nav-link"  href='/' to="/contact"> contact</Link> </li>
-
-    <li className={`navbar-item ${location.pathname === "/register"?"active": ""}`}><Link className="nav-link"href='/' to="/register"> register</Link> </li>
-  </ul>
   <Outlet/>
     </>
   )
