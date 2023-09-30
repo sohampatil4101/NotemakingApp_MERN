@@ -16,10 +16,11 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 })
  
-so = require('./routes/auth.js')
+// so = require('./routes/auth.js')
 // Available routes
-app.use('/api/auths', so)
-app.use('/api/notes', require('./routes/note'))
+// app.use('/api/auths', so)
+// app.use('/api/notes', require('./routes/note'))
+app.use('/api/user', require('./routes/user'))
 
 
 

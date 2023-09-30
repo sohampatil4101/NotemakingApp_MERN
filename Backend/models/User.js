@@ -1,5 +1,10 @@
 const mongoose = require('mongoose');
 const Schema = mongoose
+const ROLE ={
+    ADMIN:"ADMIN",
+    USER:"USER",
+    AUTHERITY:"AUTHERITY"
+}
 const UserSchema = new mongoose.Schema({
 
     name:{
@@ -10,6 +15,21 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique:true
+    },
+    phone:{
+        type: Number,
+        required: true
+    },
+    guardian:{
+        type: Number
+    },
+    address:{
+        type: String,
+        required: true
+    },
+    isactive:{
+        type: Boolean,
+        default: false
     },
 
     password:{

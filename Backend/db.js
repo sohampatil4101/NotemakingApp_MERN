@@ -1,5 +1,5 @@
 const mongoose =require("mongoose")
-const connectToMongo = ()=>{ mongoose.connect("mongodb://0.0.0.0:27017/notebook",{
+const connectToMongo = ()=>{ mongoose.connect("mongodb://0.0.0.0:27017/womensafety",{
     useNewUrlParser: true, 
     useUnifiedTopology: true
 })
